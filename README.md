@@ -12,8 +12,7 @@ This Python-based application tracks stroller prices from multiple retailers and
 ## Requirements
 
 - Python 3.10+
-- Docker
-- Docker Compose
+- Docker or Kubernetes or Run localy
 - Telegram Bot API token and chat ID
 - Libraries: `requests`, `beautifulsoup4`
 
@@ -66,6 +65,7 @@ brew install gettext
 
 Deploying applications
 ```bash
+cd kubernetes
 kubectl create -f telegram.yaml
 envsubst < telegram-secret.yaml | kubectl create -f -
 kubectl create -f uppababy-price-tracking.yaml
