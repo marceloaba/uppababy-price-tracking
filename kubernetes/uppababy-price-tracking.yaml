@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uppababy
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uppababy-price-tracking
+  namespace: uppababy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uppababy-price-tracking
+  template:
+    metadata:
+      labels:
+        app: uppababy-price-tracking
+    spec:
+      containers:
+        - name: uppababy-price-tracking
+          image: marceloaba/uppababy-price-tracking:v2.0
+          env:
+            - name: TZ
+              value: "America/Toronto"
+            - name: SCRAPE_FREQUENCY_IN_SECONDS
+              value: "1800"
+            - name: MESSAGE_API
+              value: "http://telegram.telegram.svc.cluster.local:5001/send_message"

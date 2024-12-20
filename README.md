@@ -52,6 +52,25 @@ docker-compose up -d
 
 The application will start and function using the configurations in the `docker-compose.yaml` file.
 
+### 5. Run the Application on Kubernetes
+Create base64 environment variables:
+```bash
+export TELEGRAM_TOKEN_BASE64=$(echo -n "$TELEGRAM_TOKEN" | base64)
+export TELEGRAM_CHAT_ID_BASE64=$(echo -n "$TELEGRAM_CHAT_ID" | base64)
+```
+
+Install `envsubst` to create the telegram-secret.yaml and replace the variables with the actual telegram token and group ID values
+```bash
+brew install gettext
+```
+
+Deploying applications
+```bash
+kubectl create -f telegram.yaml
+envsubst < telegram-secret.yaml | kubectl create -f -
+kubectl create -f uppababy-price-tracking.yaml
+```
+
 ## Retailers and Pricing Details
 
 The bot scrapes pricing information from the following retailers:
