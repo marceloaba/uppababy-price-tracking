@@ -16,7 +16,7 @@ services:
 
   uppababy-price-tracking:
     container_name: uppababy-price-tracking
-    image: marceloaba/uppababy-price-tracking:v1.0
+    image: marceloaba/uppababy-price-tracking:v2.0
     pull_policy: always
     restart: unless-stopped
     depends_on:
