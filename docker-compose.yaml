@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+
+  telegram:
+    container_name: telegram
+    image: marceloaba/telegram:v1.0
+    pull_policy: always
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      TZ: "America/Toronto"
+      FLASK_PORT: "5001"
+      TELEGRAM_TOKEN: "${TELEGRAM_TOKEN}"
+      TELEGRAM_CHAT_ID: "${TELEGRAM_CHAT_ID}"
+
+  uppababy-price-tracking:
+    container_name: uppababy-price-tracking
+    image: marceloaba/uppababy-price-tracking:v1.0
+    pull_policy: always
+    restart: unless-stopped
+    depends_on:
+      - telegram
+    environment:
+      TZ: "America/Toronto"
+      SCRAPE_FREQUENCY_IN_SECONDS: "1800"
+      MESSAGE_API: "http://telegram:5001/send_message"
